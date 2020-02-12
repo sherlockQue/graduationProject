@@ -1,0 +1,155 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:replace="com/header :: common_header(~{::title})">
+	<title>业务管理</title>
+	<!--   <link rel="stylesheet" th:href="@{/content/plugins/ueditor/themes/default/css/ueditor.css}"> -->
+</head>
+
+<body>
+<div class="x-nav">
+			<span class="layui-breadcrumb">
+				<a href="">首页</a>
+				<a href="">演示</a>
+				<a>
+					<cite>导航元素</cite></a>
+			</span>
+	<a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+	   onclick="location.reload()" title="刷新">
+		<i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+	</a>
+</div>
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md12">
+			<div class="layui-card">
+
+				<div class="layui-card-body ">
+
+					<!-- 搜索框 -->
+					<form class="layui-form" method="POST" lay-skin="line" id = "Oneform">
+						<div class="layui-form-item">
+							<label class="layui-form-label">素拓项目</label>
+							<div class="layui-input-inline">
+								<select name="nianji" id="nianji" lay-filter="nianji">
+									<option value="0">选择年级</option>
+									<option value="2016">2016级</option>
+									<option value="2017">2017级</option>
+									<option value="2018">2018级</option>
+									<option value="2019">2019级</option>
+									<option value="2020">2020级</option>
+									<option value="2021">2021级</option>
+									<option value="2022">2022级</option>
+								</select>
+							</div>
+							<div class="layui-input-inline" >
+								<select name="xueyuan" id="xueyuan" lay-filter="xueyuan">
+									<option value="0">请选择学院</option>
+									<option value="计算机学院">计算机学院</option>
+									<option value="管理学院">管理学院</option>
+									<option value="机电工程学院">机电工程学院</option>
+									<option value="外国语学院">外国语学院</option>
+									<option value="艺术设计学院">艺术设计学院</option>
+									<option value="财经学院">财经学院</option>
+								</select>
+							</div>
+							<div class="layui-input-inline" >
+								<select name="mclass" id="mclass" lay-filter="mclass">
+									<option value="0">请选择班级</option>
+								</select>
+							</div>
+							<div class="layui-input-inline" >
+								<select name="student" id="student" lay-filter="student">
+									<option value="0">请选择学生</option>
+								</select>
+							</div>
+
+
+						</div>
+
+					</form>
+
+					<!-- table组件-->
+
+				</div>
+				<table class="layui-hide" id="test" lay-filter="test" ></table>
+
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+
+<!-- 公共 -->
+<div th:replace="com/footer :: common_footer"></div>
+
+
+
+<!-- 弹出框 -->
+<div id="notpass" style="display: none;">
+	<div class="my-form">
+		<form class="layui-form" method="POST" lay-skin="line" id = "notReason">
+
+			<div class="layui-form-item my-form-item">
+				<label class="layui-form-label layui-icon">&#xe67a;</label>
+				<div class="layui-input-inline">
+					<input type="text" name="notMessage" id="notMessage"   placeholder="未通过原因" autocomplete="off"
+						   class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" id="reason" lay-submit lay-filter="reason">提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
+			</div>
+
+
+
+		</form>
+	</div>
+</div>
+
+
+
+<!-- 头工具条 -->
+<script type="text/html" id="toolbarDemo">
+	<div class="layui-btn-container">
+
+		<button class="layui-btn layui-btn-sm layui-icon" lay-event="pass">通过</button>
+
+		<button class="layui-btn layui-btn-sm layui-icon" lay-event="nopass">不通过</button>
+
+		<button class="layui-btn layui-btn-sm layui-icon" lay-event="flush">刷新</button>
+	</div>
+</script>
+
+
+
+<script type="text/html" id="imgTpl">
+	<div id="Img-demo" onclick="show_img(this)">
+		<img style="width:100px;height: 28px;" src="{{ d.stImg }}">
+	</div>
+</script>
+
+<script>
+    function show_img(t) {
+        var t = $(t).find("img");
+        layer.open({
+            type: 1,
+            skin: 'none', //加上边框
+            area: ['75%', '65%'], //宽高
+            offset: 'auto',
+            shadeClose: true, //开启遮罩关闭
+            end: function (index, layero) {
+                return false;
+            },
+            content: '<div style="text-align:center"><img src="' + $(t).attr('src') + '" /></div>'
+        });
+
+    }
+</script>
+
+
+
+<script th:src="@{/static/a/oneAuthentication.js}" charset="utf-8"></script>
+</html>

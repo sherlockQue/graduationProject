@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+ <!-- 控制台输出日志 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 按照这个配置来打印日志 -->
+            <pattern>[%level]--%logger{60}--%msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    
+    
+   <!-- 记录到文件里的格式
+   2019-10-23 15:40:22,888 [DEBUG] [http-nio-8080-exec-12] com.a.modules.sys.dao.SysDeptDao.selectById [BaseJdbcLogger.java : 143] <==      Total: 1
+    -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}${LOG_FILE}</File>
+        <encoder>
+            <pattern>%date [%level] [%thread] %logger{60} [%file : %line] %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}daily/${LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>180</maxHistory> <!-- 保留180天 -->
+        </rollingPolicy>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

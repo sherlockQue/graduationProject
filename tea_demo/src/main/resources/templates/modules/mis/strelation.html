@@ -1,0 +1,221 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:replace="com/header :: common_header(~{::title})">
+    <title>业务管理</title>
+    <!--   <link rel="stylesheet" th:href="@{/content/plugins/ueditor/themes/default/css/ueditor.css}"> -->
+</head>
+
+<body>
+<div class="x-nav">
+			<span class="layui-breadcrumb">
+				<a href="">首页</a>
+				<a href="">演示</a>
+				<a>
+					<cite>导航元素</cite></a>
+			</span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       onclick="location.reload()" title="刷新">
+        <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+    </a>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+
+                <div class="layui-card-body ">
+
+                    <!-- 搜索框 -->
+                    <form class="layui-form layui-col-space5" id = "searchForm" >
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" name="name"  placeholder="请输入名称" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" type="button" lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+                        </div>
+                    </form>
+
+                    <!-- table组件-->
+
+                </div>                    <table class="layui-hide" id="test" lay-filter="test" ></table>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- 公共 -->
+<div th:replace="com/footer :: common_footer"></div>
+
+
+
+<!-- 弹出框，添加新项目 -->
+<div id="add-main" style="display: none;">
+    <div class="my-form">
+        <form class="layui-form" method="POST" lay-skin="line" id = "userForm">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">素拓项目</label>
+                <div class="layui-input-inline">
+                    <select name="mulu" lay-filter="mulu">
+                        <option value="0">请选择项目目录</option>
+                        <option value="1">一、人人为我</option>
+                        <option value="2">二、人文素质修养</option>
+                        <option value="3">三、社会实践与志愿服务</option>
+                        <option value="4">四、学术科技与创新创业</option>
+                        <option value="5">五、文体艺术与身心发展</option>
+                        <option value="6">六、社团活动</option>
+                        <option value="7">七、技能培训与考证</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline" >
+                    <select name="tuoId" id="tuoId" lay-filter="">
+                        <option value="0">请选择对应项</option>
+
+                    </select>
+                </div>
+
+
+            </div>
+            <div class="layui-form-item my-form-item">
+                <label class="layui-form-label layui-icon">&#xe67a;</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="stMessage" id="stMessage"   placeholder="活动名称" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item my-form-item">
+                <label class="layui-form-label layui-icon">&#xe67a;</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="stActime" id="stActime"   placeholder="活动时间" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">上传图片</label>
+                <div class="layui-input-inline uploadHeadImage">
+                    <div class="layui-upload-drag" id="headImg">
+                        <i class="layui-icon">&#xe681;</i>
+                        <p>点击上传图片，或将图片拖拽到此处</p>
+                    </div>
+                </div>
+                <!--隐藏的input-->
+                <input type="hidden" id="stImg" name="stImg" value="00"/>
+                <div class="layui-input-inline">
+                    <div class="layui-upload-list layer-photos-demo">
+                        <img class="layui-upload-img headImage " src="http://t.cn/RCzsdCq" id="demo1" style="width: 150px;height: 150px">
+                        <p id="demoText"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" id="nowsub" lay-submit lay-filter="formAdd">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
+
+<!-- 4. 弹出框编辑 -->
+<div id="myform1" style="display: none;">
+
+    <form class="layui-form" lay-filter="userForm1" id="userForm1">
+
+        <!-- 隐藏主键 -->
+        <input type="hidden" name="stId" id="stId" >
+
+
+
+        <div class="layui-inline" style="padding: 10px 5px;">
+            <label class="layui-form-label"> 项目内容
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="stMessage1" name="stMessage"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+
+        <div class="layui-inline" style="padding: 10px 5px;">
+            <label class="layui-form-label"> 活动时间
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="stActime1" name="stActime"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+
+        <!-- 按钮-->
+        <div class="layui-form-item my-form-item" id="opration">
+            <div class="layui-input-block item">
+                <button class="layui-btn" type="button" lay-submit lay-filter="updateData" id="submit">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary" id="reset">重置</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<!-- 头工具条 -->
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <!--<shiro:hasPermission name="mis:student:save">　　-->
+        <button class="layui-btn layui-btn-sm layui-icon" lay-event="add">添加</button>
+        <!--　                   　</shiro:hasPermission>-->
+
+        <!--<shiro:hasPermission name="mis:student:info">-->
+        <!--<button class="layui-btn layui-btn-sm layui-icon" lay-event="detail">查看</button>-->
+        <!--　</shiro:hasPermission>-->
+
+        <!--<shiro:hasPermission name="mis:student:update">-->
+        <button class="layui-btn layui-btn-sm layui-icon" lay-event="edit">编辑</button>
+        <!--　</shiro:hasPermission>-->
+
+        <!--<shiro:hasPermission name="mis:student:delete">-->
+        <button class="layui-btn layui-btn-sm layui-icon" lay-event="batchDel">删除</button>
+        <!--</shiro:hasPermission>-->
+
+
+        <button class="layui-btn layui-btn-sm layui-icon" lay-event="flush">刷新</button>
+    </div>
+</script>
+
+
+
+<script type="text/html" id="imgTpl">
+
+    <div id="Img-demo" onclick="show_img(this)">
+    <img style="width:100px;height: 28px;" src="{{ d.stImg }}">
+    </div>
+</script>
+
+<script>
+    function show_img(t) {
+        var t = $(t).find("img");
+        layer.open({
+            type: 1,
+            skin: 'none', //加上边框
+            area: ['65%', '75%'], //宽高
+            offset: 'auto',
+            shadeClose: true, //开启遮罩关闭
+            end: function (index, layero) {
+                return false;
+            },
+            content: '<div style="text-align:center"><img src="' + $(t).attr('src') + '" /></div>'
+        });
+
+    }
+</script>
+
+
+
+<script th:src="@{/static/a/strelation.js}" charset="utf-8"></script>
+</html>
