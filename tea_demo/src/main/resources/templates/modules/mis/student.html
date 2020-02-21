@@ -5,126 +5,255 @@
 </head>
 
 <body>
+
+<!--  导航-->
 <div class="x-nav">
-			<span class="layui-breadcrumb">
-				<a href="">首页</a>
-				<a href="">演示</a>
-				<a>
-					<cite>导航元素</cite></a>
-			</span>
-    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
-       onclick="location.reload()" title="刷新">
-        <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
-    </a>
+			<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">演示</a>
+				<a> <cite>导航元素</cite></a>
+			</span> <a class="layui-btn layui-btn-small" style="line-height: 1.6em; margin-top: 3px; float: right"
+                       onclick="location.reload()"
+                       title="刷新"> <i class="layui-icon layui-icon-refresh" style="line-height: 30px"></i></a>
 </div>
+
+<!-- 内容区-->
 <div class="layui-fluid">
+
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
 
-                <div class="layui-card-body ">
 
-                    <!-- 搜索框 -->
-                    <form class="layui-form layui-col-space5" id = "searchForm" >
+                <!--  1.搜索条件区域 -->
+                <div class="layui-card-body ">
+                    <form class="layui-form layui-col-space5" id="searchForm">
+
+                        <!-- 根据需要添加条件 -->
                         <div class="layui-inline layui-show-xs-block">
-                            <input type="text" name="name"  placeholder="请输入名称" autocomplete="off" class="layui-input">
+                            <input type="text" name="" placeholder="请输入条件" class="layui-input">
                         </div>
+
+
+                        <!-- 按钮 -->
                         <div class="layui-inline layui-show-xs-block">
-                            <button class="layui-btn" type="button" lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+                            <button class="layui-btn" type="button" lay-submit="" lay-filter="search">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
+                            <button class="layui-btn" type="button" lay-submit="" lay-filter="all">全部</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- 2.头部工具条，通过toolbarDemo绑定到table,通过lay-event监听事件 -->
+                <script type="text/html" id="toolbarDemo">
+                    <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm " lay-event="add">添加</button>
+                        <button class="layui-btn layui-btn-sm " lay-event="detail">查看</button>
+                        <button class="layui-btn layui-btn-sm " lay-event="edit">编辑</button>
+                        <button class="layui-btn layui-btn-sm " lay-event="batchDel">删除</button>
+                    </div>
+                </script>
+
+                <!-- 3.数据表格 -->
+                <div class="layui-card-body ">
+                    <table class="layui-hide" id="test" lay-filter="test"></table>
+                </div>
+
+                <!-- 4. 弹出框 添加用户 -->
+                <div id="myform1" style="display: none;">
+
+                    <form class="layui-form" lay-filter="userForm" id="userForm">
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>学号
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuId" name="stuId" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>姓名
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="username" name="username" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>密码
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuPsword" name="stuPsword" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>年级
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuGrade" name="stuGrade" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>专业
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuMajor" name="stuMajor" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>班级
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuClass" name="stuClass" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>电话
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuPhone" name="stuPhone" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>学院
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuCollege" name="stuCollege" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <!-- 按钮-->
+                        <div class="layui-form-item my-form-item" id="opration">
+                            <div class="layui-input-block item">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="save" id="submit">保存
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary" id="reset">重置</button>
+                            </div>
                         </div>
                     </form>
 
-                    <!-- table组件-->
-                    <table class="layui-hide" id="test" lay-filter="test" ></table>
+                </div>
+
+                <!-- 4. 弹出框 编辑用户 -->
+                <div id="myform2" style="display: none;">
+
+                    <form class="layui-form" lay-filter="userForm2" id="userForm2">
+
+                        <!-- 隐藏主键 -->
+                        <input type="hidden" name="stuId" id="stuId2">
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>姓名
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="username2" name="username" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>年级
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuGrade2" name="stuGrade" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>专业
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuMajor2" name="stuMajor" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>班级
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuClass2" name="stuClass" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>电话
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuPhone2" name="stuPhone" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>学院
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="stuCollege2" name="stuCollege" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <!-- 按钮-->
+                        <div class="layui-form-item my-form-item" id="opration2">
+                            <div class="layui-input-block item">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="updateUser" id="submit2">保存
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary" id="reset2">重置</button>
+                            </div>
+                        </div>
+                    </form>
 
                 </div>
+
+
             </div>
         </div>
     </div>
+
+
 </div>
+
+
 </body>
+
 
 <!-- 公共 -->
 <div th:replace="com/footer :: common_footer"></div>
 
 
+<!-- 自己本页的JS文件 -->
+<script th:src="@{/static/a/student.js}" charset="utf-8"></script>
 
-<!-- 弹出框 -->
-<div id="add-main" style="display: none;">
-    <div class="my-form">
-        <form class="layui-form" method="POST" lay-skin="line" id = "userForm">
-            <div class="layui-form-item my-form-item" id = "userIdBox">
-                <label class="layui-form-label layui-icon">&#xe66e;</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="stuId" id="stuId" readonly="true" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon">&#xe770;</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="username" id="username"  lay-verify="username" placeholder="请输入用户名" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon">&#xe673;</label>
-                <div class="layui-input-inline">
-                    <input type="password" name="password" id="password" lay-verify="password" placeholder="请输入密码" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item my-form-item">
-                <label class="layui-form-label layui-icon">&#xe770;</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="mobile" id="mobile" lay-verify="mobile" maxlength="11" placeholder="请输入手机号" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item my-form-item" id = "timeBox">
-                <label class="layui-form-label layui-icon">&#xe637;</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="createTime" id="createTime" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item my-form-item" id="opration">
-                <div class="layui-input-block item">
-                    <button class="layui-btn" type="button"  lay-submit="" lay-filter="demo1" id="submit1">保存</button>
-                    <button type="reset" class="layui-btn layui-btn-primary" id="reset" >重置</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- 头工具条 -->
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <!--<shiro:hasPermission name="mis:student:save">　　-->
-            <button class="layui-btn layui-btn-sm layui-icon" lay-event="add">添加</button>
-            <!--　                   　</shiro:hasPermission>-->
-
-        <!--<shiro:hasPermission name="mis:student:info">-->
-            <button class="layui-btn layui-btn-sm layui-icon" lay-event="detail">查看</button>
-            <!--　</shiro:hasPermission>-->
-
-        <!--<shiro:hasPermission name="mis:student:update">-->
-            <button class="layui-btn layui-btn-sm layui-icon" lay-event="edit">编辑</button>
-            <!--　</shiro:hasPermission>-->
-
-        <!--<shiro:hasPermission name="mis:student:delete">-->
-            <button class="layui-btn layui-btn-sm layui-icon" lay-event="batchDel">删除</button>
-        <!--</shiro:hasPermission>-->
-
-
-        <button class="layui-btn layui-btn-sm layui-icon" lay-event="flush">刷新</button>
-    </div>
-</script>
-
-
-
-
-
-<script th:src="@{/static/a/strelation.js}" charset="utf-8"></script>
 </html>

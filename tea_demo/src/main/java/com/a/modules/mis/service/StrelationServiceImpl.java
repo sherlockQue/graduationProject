@@ -1,11 +1,13 @@
 package com.a.modules.mis.service;
 
 import com.a.common.core.Query;
+import com.a.modules.mis.entity.Complaint;
 import com.a.modules.mis.entity.Tuoproject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,11 +28,10 @@ import com.a.modules.mis.entity.Strelation;
 @Service
 public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation> {
 
+    @Autowired
+    private ComplaintServiceImpl complaintService;
 
     public PageUtils queryPage(Map<String, Object> params) {
-
-        // String username = (String) params.get("username");
-
 
         IPage<Strelation> page = this.page(new Query<Strelation>().getPage(params),
                 new QueryWrapper<Strelation>());
@@ -101,7 +102,7 @@ public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation
      * @param flag  true为通过，false为不通过
      * @param renId 认证人id
      */
-    public boolean AOnePass(Long[] ids, boolean flag, String renId) {
+    public boolean AOnePass(Long[] ids, boolean flag, Long renId) {
 
         LocalDateTime localDateTime = LocalDateTime.now(); //时间
         Strelation strelation = new Strelation();
@@ -114,7 +115,7 @@ public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation
             strelation.setStCheckone(renId);
             strelation.setStOneStatus(2);
             strelation.setStOneTime(localDateTime);
-
+            complaintBox(ids);
         }
         for (Long id : ids) {
             UpdateWrapper<Strelation> updateWrapper = new UpdateWrapper<>();
@@ -130,7 +131,7 @@ public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation
      * @param flag  true为通过，false为不通过
      * @param renId 认证人id
      */
-    public boolean ATwoPass(Long[] ids, boolean flag, String renId) {
+    public boolean ATwoPass(Long[] ids, boolean flag, Long renId) {
 
         LocalDateTime localDateTime = LocalDateTime.now(); //时间
         Strelation strelation = new Strelation();
@@ -143,7 +144,7 @@ public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation
             strelation.setStChecktwo(renId);
             strelation.setStTwoStatus(2);
             strelation.setStTwoTime(localDateTime);
-
+            complaintBox(ids);
         }
         for (Long id : ids) {
             UpdateWrapper<Strelation> updateWrapper = new UpdateWrapper<>();
@@ -154,5 +155,21 @@ public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation
         return true;
     }
 
+    /**
+     * 当有不通过的项目时，记录到申诉表
+     */
+    public void complaintBox(Long []ids){
 
+        for(Long id : ids){
+            Strelation strelation = this.getById(id);
+            Complaint complaint =new Complaint();
+            complaint.setStuId(strelation.getStuId());
+            complaint.setStId(id);
+            complaint.setCpGrade(strelation.getStGrade());
+            complaint.setCpTerm(strelation.getStTerm());
+            complaint.setCpStatus(0);
+            complaintService.save(complaint);
+        }
+
+    }
 }

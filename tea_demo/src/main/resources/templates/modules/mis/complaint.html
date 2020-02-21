@@ -1,0 +1,96 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:replace="com/header :: common_header(~{::title})">
+    <title>业务管理</title>
+    <!--   <link rel="stylesheet" th:href="@{/content/plugins/ueditor/themes/default/css/ueditor.css}"> -->
+</head>
+
+<body>
+
+<!--  导航-->
+<div class="x-nav">
+			<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">演示</a>
+				<a> <cite>导航元素</cite></a>
+			</span> <a class="layui-btn layui-btn-small" style="line-height: 1.6em; margin-top: 3px; float: right"
+                       onclick="location.reload()"
+                       title="刷新"> <i class="layui-icon layui-icon-refresh" style="line-height: 30px"></i></a>
+</div>
+
+<!-- 内容区-->
+<div class="layui-fluid">
+
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+
+
+                <!--  1.搜索条件区域 -->
+                <div class="layui-card-body ">
+                    <form class="layui-form layui-col-space5" id="searchForm">
+
+                        <!-- 根据需要添加条件 -->
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" name="" placeholder="请输入条件" class="layui-input">
+                        </div>
+
+
+                        <!-- 按钮 -->
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" type="button" lay-submit="" lay-filter="search">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
+                            <button class="layui-btn" type="button" lay-submit="" lay-filter="all">全部</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- 2.头部工具条，通过toolbarDemo绑定到table,通过lay-event监听事件 -->
+                <script type="text/html" id="toolbarDemo">
+                    <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm " lay-event="add">申诉</button>
+                    </div>
+                </script>
+
+                <!-- 3.数据表格 -->
+                <div class="layui-card-body ">
+                    <table class="layui-hide" id="test" lay-filter="test"></table>
+                </div>
+
+                <!-- 4. 弹出框 -->
+                <div id="myform1" style="display: none;">
+
+                    <form class="layui-form" lay-filter="userForm" id="userForm">
+
+                        <!-- 隐藏主键 -->
+                        <input type="hidden" name="id" id="id">
+
+                        <div class="layui-inline" style="padding: 10px 5px;">
+                            <label class="layui-form-label"> <span class="x-red">*</span>申诉原因
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="cpReason" name="cpReason" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <!-- 按钮-->
+                        <div class="layui-form-item my-form-item" id="opration">
+                            <div class="layui-input-block item">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="appeal" id="submit">提交
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- 公共 -->
+<div th:replace="com/footer :: common_footer"></div>
+
+
+<script th:src="@{/static/a/complaint.js}" charset="utf-8"></script>
+</html>

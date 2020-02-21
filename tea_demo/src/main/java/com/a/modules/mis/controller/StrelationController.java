@@ -36,18 +36,16 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- *
- *学生素拓提交
+ * 学生素拓提交
  */
 @RestController
 @RequestMapping("mis/strelation")
 public class StrelationController {
+
     @Autowired
     private StrelationServiceImpl strelationService;
-
     @Autowired
     private DictServiceImpl dictService;
-
     @Autowired
     private StudentServiceImpl studentService;
 
@@ -55,10 +53,11 @@ public class StrelationController {
      * 列表
      */
     @PostMapping("/list")
-    //@RequiresPermissions("mis:strelation:list")
+
     public R list(@RequestParam Map<String, Object> params) {
-        SysUser sysUser = ControllerAide.getUserEntity();
-        System.out.println("username:" + sysUser.getUsername());
+
+//        SysUser sysUser = ControllerAide.getUserEntity();
+//        System.out.println("username:" + sysUser.getUsername());
         // System.out.println("username:"+ControllerAide.getSessionAttribute("username"));
 
         PageUtils page = strelationService.queryPage(params);
@@ -83,13 +82,14 @@ public class StrelationController {
     //@RequiresPermissions("mis:strelation:save")
     public R save(@RequestBody Strelation strelation, HttpServletRequest request) {
 
-
-        String stuId = "2016130217";
         Dict dict = dictService.getById(1);
-        System.out.println(dict.toString());
+        //今年的素拓
+        String StGrade = dict.getGrade();
+        //第一学期
+        Integer StTerm = dict.getTerm();
+        String stuId = "2016130217";
+
         String pubPath = "F:/uploadImage";     //临时保存路径
-        String StGrade = dict.getGrade();       //今年的素拓
-        Integer StTerm = dict.getTerm();       //第一学期
         LocalDateTime nowtime = LocalDateTime.now(); //当前时间
 
         Student student = studentService.getById(stuId);
@@ -110,7 +110,7 @@ public class StrelationController {
             //File file =new File(imgpath);
 
             File source = new File(imgpath);
-            File dest = new File(pubPath+ipath);
+            File dest = new File(pubPath + ipath);
             if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
@@ -126,8 +126,6 @@ public class StrelationController {
             dest.deleteOnExit();
 
         }
-
-
         //------
         strelation.setStuId(stuId);
         strelation.setStGrade(StGrade);

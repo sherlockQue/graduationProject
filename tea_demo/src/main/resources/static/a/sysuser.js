@@ -190,15 +190,13 @@ layui.use(['table', 'layer','form','laydate'], function() {
 		$("#userId").attr({"value":dataExit? "" : data.userId});
 		$("#userIdBox").css("display",dataExit?"none":"inline");
 		$("#username").attr({"value":dataExit? "" : data.username, "readonly":readonly});
-		$("#createBy").attr({"value":dataExit? "" : data.createBy, "readonly":readonly});
 		$("#status").attr({"value":dataExit? 1 : data.status});
 		form.val("userForm",{
 			'switchTest':dataExit? true:(data.status==1)
 					}
 		);
-		//$("#switchTest").attr({"disabled":readonly});
+        //$("#deptId").val(data.deptId);
 		$("#deptId").attr({"value":dataExit? "" : data.deptId, "readonly":readonly});
-		$("#roleIds").attr({"value":dataExit? "" : data.roleIds, "readonly":readonly});
 		$("#password").attr({"value":dataExit? "" : data.password, "readonly":readonly,"type":readonly?"text":"password"});
 		$("#opration").attr({"hidden":readonly});
 	}

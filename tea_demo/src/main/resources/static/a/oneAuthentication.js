@@ -42,8 +42,8 @@ layui.use(['table', 'upload', 'layer', 'form', 'laydate'], function () {
             return {
                 "code": res.code, //解析接口状态
                 "msg": res.msg, //解析提示文本
-                "count": typeof(res.page) == 'undefined' ? "" : res.page.totalCount, //解析数据长度
-                "data": typeof(res.page) == 'undefined' ? "" : res.page.list //解析数据列表
+                "count": typeof(res.page) == 'NaNa' ? "" : res.page.totalCount, //解析数据长度
+                "data": typeof(res.page) == 'NaNa' ? "" : res.page.list //解析数据列表
             };
         },
         done: function (res, curr, count) {
@@ -186,28 +186,6 @@ layui.use(['table', 'upload', 'layer', 'form', 'laydate'], function () {
 
     }
 
-
-    /* 打开弹出框 */
-    function layerOpen(title) {
-        layer.open({
-            title: title,
-            type: 1,
-            area: ['900px', '600px'],
-            btnAlign: 'c',
-            shadeClose: true,
-            content: $("#add-main"),
-            resize: false,
-            success: function (layero, index) {
-                laydate.render({
-                    elem: '#createTime'
-                    , type: 'datetime'
-                });
-            }
-        });
-
-    }
-
-
     /**
      *
      * 监听下拉菜单，动态显示班级
@@ -264,7 +242,7 @@ layui.use(['table', 'upload', 'layer', 'form', 'laydate'], function () {
                 var m = result.student;
 
                 for (i in m) {
-                    proHtml = proHtml + '<option value="' + m[i].stuId + '">' + m[i].stuName + '</option>';
+                    proHtml = proHtml + '<option value="' + m[i].stuId + '">' + m[i].username + '</option>';
                     //('#suitem').append('<option value="' + m[i].tuoId + '">' + m[i].tuoMess +'</option>');
                 }
                 $('#student').html(proHtml);

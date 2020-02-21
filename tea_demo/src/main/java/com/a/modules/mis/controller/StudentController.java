@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 
+import com.a.common.utils.EncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,7 +44,7 @@ public class StudentController {
     }
 
     @GetMapping("/showstudent/{nian}/{xue}/{mc}")
-    public  R showstudent(@PathVariable("nian")String nian,@PathVariable("xue")String xue,@PathVariable("mc")String mc){
+    public  R showStudent(@PathVariable("nian")String nian,@PathVariable("xue")String xue,@PathVariable("mc")String mc){
 
         List <Student> student=studentService.AgetStudent(nian,xue,mc);
         return R.ok().put("student",student);
@@ -66,7 +67,8 @@ public class StudentController {
     @PostMapping("/save")
     //@RequiresPermissions("mis:student:save")
     public R save(@RequestBody Student student){
-		studentService.save(student);
+        System.out.println(student.toString());
+        studentService.ASave(student);
         return R.ok();
     }
 

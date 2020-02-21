@@ -1,6 +1,7 @@
 
 package com.a.common.core;
 
+import com.a.modules.mis.entity.Student;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -52,8 +53,8 @@ public  class ControllerAide {
      * 得到当前user
      * @return
      */
-	public static SysUser getUserEntity() {
-		return (SysUser)SecurityUtils.getSubject().getPrincipal();
+	public  static Object getUserEntity() {
+		return (Object) SecurityUtils.getSubject().getPrincipal();
 	}
 
 	/**
@@ -61,7 +62,12 @@ public  class ControllerAide {
 	 * @return
 	 */
 	public static Long getUserId() {
-		return getUserEntity().getUserId();
+		Object userEntity = getUserEntity();
+		if (userEntity instanceof SysUser){
+			return ((SysUser) userEntity).getUserId();
+		}
+		Long userId = (long)Integer.valueOf(((Student) userEntity).getStuId());
+		return userId;
 	}
 	
 		

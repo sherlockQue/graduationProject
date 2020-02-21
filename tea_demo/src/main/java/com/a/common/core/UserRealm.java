@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.a.modules.mis.entity.Student;
+import com.a.modules.mis.service.StudentServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -45,6 +47,8 @@ import com.a.modules.sys.service.SysUserServiceImpl;
 public class UserRealm extends AuthorizingRealm {
 	@Autowired
 	private SysUserServiceImpl sysUserService;
+	@Autowired
+	private StudentServiceImpl studentService;
 
 	/**
 	 * 1.认证(登录时调用)
@@ -58,18 +62,27 @@ public class UserRealm extends AuthorizingRealm {
 
 		// 查询用户信息，根据用户名查出用户
 		SysUser user =  sysUserService.AgetByName(token.getUsername());
-		
-		
+		Student student =studentService.AgetOne(token.getUsername());
 		// 这里抛出异常对应controller获取异常
-		// 账号不存在
-		if (user == null) {
-			throw new UnknownAccountException();
-		}
-		// 账号锁定
-		if (user.getStatus() == 0) {
-			throw new LockedAccountException();
-		}
 
+		if(student != null){
+
+			SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(student, student.getStuPsword(),
+					ByteSource.Util.bytes(student.getSalt()), getName());
+			return info;
+
+		}else {
+
+			// 账号不存在
+			if (user == null) {
+				throw new UnknownAccountException();
+			}
+			// 账号锁定
+			if (user.getStatus() == 0) {
+				throw new LockedAccountException();
+			}
+
+		}
 		// 验证给定主体的哈希凭据 hashedCredentials
 		// 密码认证，这里有多个重载 getName() "UserRealm"
 		//// sha256加密

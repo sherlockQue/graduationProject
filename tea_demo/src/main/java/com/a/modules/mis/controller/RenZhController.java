@@ -6,8 +6,6 @@ import com.a.common.utils.PageUtils;
 import com.a.modules.mis.service.StrelationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.Map;
 
 @RestController
@@ -33,7 +31,7 @@ public class RenZhController {
             PageUtils page = strelationService.renListOne(params);
             return R.ok().put("page", page);
         }
-        return R.ok().put("page", null);
+        return R.ok().put("page", "NaNa");
     }
 
     /**
@@ -51,7 +49,7 @@ public class RenZhController {
             return R.ok().put("page", page);
         }
 
-        return R.ok().put("page", null);
+        return R.ok().put("page", "NaNa");
     }
 
 
@@ -63,7 +61,7 @@ public class RenZhController {
     @PostMapping("/onePass")
     public R passOneItems(@RequestBody Long[] stIds, String sign) {
 
-        String renId = "test";  //认证人的id
+        Long renId = 3L;  //认证人的id
         boolean np = false;
         if ("true".equals(sign)) {
             np = true;
@@ -80,7 +78,7 @@ public class RenZhController {
      */
     @PostMapping("/twoPass")
     public R passTwoItems(@RequestBody Long[] stIds, String sign) {
-        String renId = "test";  //认证人的id
+        Long renId = 4L; //认证人的id
         boolean np = false;
         if ("true".equals(sign)) {
             np = true;

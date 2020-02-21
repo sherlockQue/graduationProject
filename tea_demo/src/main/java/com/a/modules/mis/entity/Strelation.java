@@ -56,7 +56,7 @@ public class Strelation implements Serializable {
 	/**
 	 * 负责人
 	 */
-	private String stCheckone;
+	private Long stCheckone;
 	/**
 	 * 状态  0/1/2  待审核/通过/未通过
 	 */
@@ -68,7 +68,7 @@ public class Strelation implements Serializable {
 	/**
 	 * 
 	 */
-	private String stChecktwo;
+	private Long stChecktwo;
 	/**
 	 * 
 	 */
@@ -189,13 +189,13 @@ public class Strelation implements Serializable {
 	/**
 	 * 设置：负责人
 	 */
-	public void setStCheckone(String stCheckone) {
+	public void setStCheckone(Long stCheckone) {
 		this.stCheckone = stCheckone;
 	}
 	/**
 	 * 获取：负责人
 	 */
-	public String getStCheckone() {
+	public Long getStCheckone() {
 		return stCheckone;
 	}
 	/**
@@ -225,13 +225,13 @@ public class Strelation implements Serializable {
 	/**
 	 * 设置：
 	 */
-	public void setStChecktwo(String stChecktwo) {
+	public void setStChecktwo(Long stChecktwo) {
 		this.stChecktwo = stChecktwo;
 	}
 	/**
 	 * 获取：
 	 */
-	public String getStChecktwo() {
+	public Long getStChecktwo() {
 		return stChecktwo;
 	}
 	/**

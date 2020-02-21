@@ -1,5 +1,6 @@
 package com.a.modules.mis.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -19,16 +20,20 @@ public class Student implements Serializable {
 	/**
 	 * 学号
 	 */
-	@TableId
+	@TableId(value = "stu_id",type = IdType.INPUT)
 	private String stuId;
 	/**
 	 * 
 	 */
-	private String stuName;
+	private String username;
 	/**
 	 * 密码
 	 */
 	private String stuPsword;
+	/**
+	 * 盐
+	 */
+	private String salt;
 	/**
 	 * 年级：2016
 	 */
@@ -65,15 +70,15 @@ public class Student implements Serializable {
 	/**
 	 * 设置：
 	 */
-	public void setStuName(String stuName) {
-		this.stuName = stuName;
-	}
-	/**
-	 * 获取：
-	 */
-	public String getStuName() {
-		return stuName;
-	}
+//	public void setStuName(String stuName) {
+//		this.stuName = stuName;
+//	}
+//	/**
+//	 * 获取：
+//	 */
+//	public String getStuName() {
+//		return stuName;
+//	}
 	/**
 	 * 设置：密码
 	 */
@@ -147,4 +152,34 @@ public class Student implements Serializable {
 		return stuCollege;
 	}
 
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Override
+	public String toString() {
+		return "Student{" +
+				"stuId='" + stuId + '\'' +
+				", username='" + username + '\'' +
+				", stuPsword='" + stuPsword + '\'' +
+				", salt='" + salt + '\'' +
+				", stuGrade='" + stuGrade + '\'' +
+				", stuMajor='" + stuMajor + '\'' +
+				", stuClass='" + stuClass + '\'' +
+				", stuPhone='" + stuPhone + '\'' +
+				", stuCollege='" + stuCollege + '\'' +
+				'}';
+	}
 }

@@ -28,12 +28,8 @@ layui.use(['table', 'upload','layer','form','laydate'], function() {
 				,{field: 'stMessage', title: "内容", width:"20%"}
                 ,{field: 'stActime', title: '活动时间', width:"12%" }
                 , {field: 'stImg', title: '图片', width: "14%",templet:'#imgTpl'}
-                //,{field: 'stCheckone', title: '系负责人', width:"8%"}
                 ,{field: 'stOneStatus', title: '系审核状态', width:"12%"}
-               // ,{field: 'stOneTime', title: '系认证时间', width:"15%"}
-               // ,{field: 'stChecktwo', title: '院负责人', width:"8%"}
                 ,{field: 'stTwoStatus', title: '院审核状态', width:"12%"}
-                //,{field: 'stTwoTime', title: '院认证时间', width:"15%"}
             ]
 
 		],
@@ -237,33 +233,8 @@ layui.use(['table', 'upload','layer','form','laydate'], function() {
             });
         }
 	}
-	
-	/*  查看用户信息：设置只读，隐藏操作按钮，并打开弹出框 */
-	// function showData(user){
-	// 	var data = getData(user);
-	// 	console.log(data);
-	// 	if(!(typeof(data)=="undefined")){
-	// 		setForm(data,true);
-	// 		var title = '查看用户';
-	// 		layerOpen(title);
-	// 	}
-	// }
-	//
 
 
-	/* 设置form表单的值，如果data未定义，则设空值，根据data是否定义以及readonly的真假设置隐藏元素与是否可编辑 */
-	function setForm(data,readonly){
-		var dataExit = (typeof(data) == "undefined");
-		console.log(dataExit);
-		$("#stuId").attr({"value":dataExit? "" : data.stuId});
-		$("#stMessage").attr({"value":dataExit? "" : data.stMessage});
-		$("#stActime").attr({"value":dataExit? "" : data.stActime});
-		$("#stCheckone").attr({"value":dataExit? "" : data.stCheckone});
-        $("#stOneStatus").attr({"value":dataExit? "" : data.stOneStatus});
-        $("#stChecktwo").attr({"value":dataExit? "" : data.stChecktwo});
-        $("#stTwoStatus").attr({"value":dataExit? "" : data.stTwoStatus});
-
-	}
 	/* 根据user.length判断是否未选择或选择多个对象，获取userId并传到后端同步获取user的所有属性， */
 	function getData(user){
 		var result ;

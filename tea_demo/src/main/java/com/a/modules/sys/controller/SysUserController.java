@@ -57,16 +57,16 @@ public class SysUserController  {
 	/**
 	 * 修改登录用户密码
 	 */
-	@PostMapping("/password")
-	public R password(String password, String newPassword){
-		//更新密码
-		boolean flag = sysUserService.AupdatePassword(ControllerAide.getUserEntity(), password, newPassword);
-		if(!flag){
-			return R.error("原密码不正确");
-		}
-		
-		return R.ok();
-	}
+//	@PostMapping("/password")
+//	public R password(String password, String newPassword){
+//		//更新密码
+//		boolean flag = sysUserService.AupdatePassword(ControllerAide.getUserEntity(), password, newPassword);
+//		if(!flag){
+//			return R.error("原密码不正确");
+//		}
+//
+//		return R.ok();
+//	}
 	
 	/**
 	 * 用户信息

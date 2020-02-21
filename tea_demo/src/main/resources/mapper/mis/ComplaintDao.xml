@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.a.modules.mis.dao.ComplaintDao">
+
+    <resultMap id="resultMap1" type="com.a.modules.mis.entity.Complaint">
+        <id column="id" property="id"/>
+        <result column="st_id" property="stId"/>
+        <result column="stu_id" property="stuId"/>
+        <result column="cp_grade" property="cpGrade"/>
+        <result column="cp_term" property="cpTerm"/>
+        <result column="cp_reason" property="cpReason"/>
+        <result column="cp_applytime" property="cpApplytime"/>
+        <result column="cp_status" property="cpStatus"/>
+        <result column="cp_chargeid" property="cpChargeid"/>
+        <result column="cp_dealtime" property="cpDealtime"/>
+        <result column="cp_dealreason" property="cpDealreason"/>
+        <association property="strelation" javaType="Strelation">
+            <id column="st_id" property="stId"/>
+            <result column="tuo_id" property="tuoId"/>
+            <result column="st_message" property="stMessage"/>
+            <result column="st_img" property="stImg"/>
+            <result column="st_actime" property="stActime"/>
+        </association>
+    </resultMap>
+    <select id="AqueryCp" resultMap="resultMap1">
+      select c.id,c.st_id,c.stu_id,c.cp_grade,c.cp_term,c.cp_reason,c.cp_applytime,c.cp_status,c.cp_chargeid,
+      c.cp_dealtime,c.cp_dealreason,st.tuo_id,st.st_message,st.st_img,st.st_actime from complaint c join student s
+      on c.stu_id = s.stu_id join strelation st on st.st_id = c.st_id
+      where c.cp_grade = #{param2}
+      and c.cp_term = #{param3}
+      and s.stu_grade = #{param4}
+      and s.stu_college = #{param5}
+      and c.cp_status = 1
+
+</select>
+</mapper>

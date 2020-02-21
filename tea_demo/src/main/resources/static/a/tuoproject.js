@@ -171,10 +171,8 @@ layui.use(['table', 'layer', 'form'],
 
             if (!(typeof(data) == "undefined")) {
 
-
                 // 给表单赋值，封装出来
                 form.val("userForm", data);
-
                 // 初始化工作
                 // 设置表单元素只读，通用组件...将form表单里的所有元素或者指定设置为只读
                 $('#userForm').find('input,textarea,select').prop('readonly', true);

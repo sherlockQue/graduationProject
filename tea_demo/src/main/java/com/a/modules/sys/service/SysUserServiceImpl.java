@@ -59,7 +59,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> {
 
 	/**
 	 * 查询用户
-	 * 
 	 * @param userId
 	 * @return
 	 */
