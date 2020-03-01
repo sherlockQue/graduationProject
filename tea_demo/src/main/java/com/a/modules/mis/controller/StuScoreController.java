@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 
+import com.a.common.core.ControllerAide;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,11 +33,14 @@ public class StuScoreController {
     private StuScoreServiceImpl stuScoreService;
 
     /**
-     * 列表
+     * 列表,当前登陆学生的历年素拓分
      */
     @PostMapping("/list")
-    //@RequiresPermissions("mis:stuscore:list")
+    @RequiresPermissions("sys:student")
     public R list(@RequestParam Map<String, Object> params){
+
+        Long stuId = ControllerAide.getUserId();
+        params.put("stuId",stuId+"");
         PageUtils page = stuScoreService.queryPage(params);
         return R.ok().put("page", page);
     }

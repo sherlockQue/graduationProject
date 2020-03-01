@@ -4,11 +4,10 @@
 <mapper namespace="com.a.modules.sys.dao.SysUserDao">
 	
 	<!-- 查询用户的所有权限 -->
-	<select id="AqueryAllPerms" resultType="string">
-		select m.perms from sys_user_role ur 
-			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
-			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
-		where ur.user_id = #{userId}
+	<select id="AqueryAllPerms" resultType="string" >
+		select d.perms from sys_user s join sys_dept d
+			on s.dept_id = d.dept_id
+			where s.user_id = #{userId}
 	</select>
 	
 	

@@ -3,6 +3,8 @@ package com.a.modules.mis.service;
 import com.a.common.core.Query;
 import com.a.modules.mis.entity.Complaint;
 import com.a.modules.mis.entity.Tuoproject;
+import com.a.modules.sys.entity.Dict;
+import com.a.modules.sys.service.DictServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -30,11 +32,19 @@ public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation
 
     @Autowired
     private ComplaintServiceImpl complaintService;
+    @Autowired
+    private DictServiceImpl dictService;
+
 
     public PageUtils queryPage(Map<String, Object> params) {
 
+        Dict dict = dictService.getById(1);
+        String StGrade = dict.getGrade();  //今年的素拓
+        Integer StTerm = dict.getTerm();  //第一学期
         IPage<Strelation> page = this.page(new Query<Strelation>().getPage(params),
-                new QueryWrapper<Strelation>());
+                new QueryWrapper<Strelation>().eq("stu_id", params.get("stu_id"))
+                        .eq("st_grade", StGrade)
+                        .eq("st_term", StTerm));
 
 
         return new PageUtils(page);
@@ -60,7 +70,7 @@ public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation
     }
 
     /**
-     *二级认证的学生素拓项目
+     * 二级认证的学生素拓项目
      */
     public PageUtils renListTwo(Map<String, Object> params) {
 
@@ -73,7 +83,7 @@ public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation
                         .eq("st_term", StTerm)
                         .eq("stu_id", stuId)
                         .eq("st_one_status", 1)
-                        .eq("st_two_status",0)
+                        .eq("st_two_status", 0)
         );
 
         return new PageUtils(page);
@@ -125,6 +135,7 @@ public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation
 
         return true;
     }
+
     /**
      * 处理二级认证,
      *
@@ -158,11 +169,11 @@ public class StrelationServiceImpl extends ServiceImpl<StrelationDao, Strelation
     /**
      * 当有不通过的项目时，记录到申诉表
      */
-    public void complaintBox(Long []ids){
+    public void complaintBox(Long[] ids) {
 
-        for(Long id : ids){
+        for (Long id : ids) {
             Strelation strelation = this.getById(id);
-            Complaint complaint =new Complaint();
+            Complaint complaint = new Complaint();
             complaint.setStuId(strelation.getStuId());
             complaint.setStId(id);
             complaint.setCpGrade(strelation.getStGrade());

@@ -95,10 +95,12 @@
 <!-- 头工具条 -->
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
+        <shiro:hasPermission name="sys:system">
         <button class="layui-btn layui-btn-sm " lay-event="add">添加</button>
         <button class="layui-btn layui-btn-sm " lay-event="detail">查看</button>
         <button class="layui-btn layui-btn-sm " lay-event="edit">编辑</button>
         <button class="layui-btn layui-btn-sm " lay-event="batchDel">删除</button>
+        </shiro:hasPermission>
     </div>
 </script>
 

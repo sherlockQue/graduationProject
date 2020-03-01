@@ -100,41 +100,29 @@ public class UserRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		// principals SimplePrincipalCollection (id=2695)
-		// cachedToString "io.hz.modules.sys.entity.SysUserEntity@1d1b02" (id=2692)
-		// realmPrincipals LinkedHashMap<K,V> (id=2700)
 
 		// 得到当前用户
-		SysUser user = (SysUser) principals.getPrimaryPrincipal();
-		Long userId = user.getUserId();
-
-		// 结果如：[null, null, null, null, sys:user:list,sys:user:info, sys:user:save]
-		List<String> permsList=new ArrayList<String>();
-		
-		
-		if(userId == Constant.SUPER_ADMIN){
-			permsList=sysUserService.AqueryAllPermsOfGOD();  //系统管理员，拥有所有权限
-		}
-		else {
-			permsList= sysUserService.AqueryAllPerms(userId); // 普通用户查询自己的权限
-		}
-		
-
-		// 用户权限列表,过滤掉空的，排序，留下如：
-		// [sys:menu:update, sys:menu:delete, sys:dept:update,]
-		Set<String> permsSet = new HashSet<>();
-		for (String perms : permsList) {
-			if (StringUtils.isBlank(perms)) {
-				continue;
+		Object userEntity = principals.getPrimaryPrincipal();
+		// 权限格式如[sys:user:info, sys:user:save]
+		String permsList="";
+		//当管理员用户登陆时
+		if(userEntity instanceof SysUser){
+			SysUser user = (SysUser) userEntity;
+			Long userId = user.getUserId();
+			permsList= sysUserService.AqueryAllPerms(userId); // 查询用户权限
+			String[] perms = permsList.split(",");
+			Set<String> permsSet = new HashSet<>();
+			for(String perm :perms){
+				permsSet.add(perm);
 			}
-			permsSet.addAll(Arrays.asList(perms.trim().split(",")));
+			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+			info.setStringPermissions(permsSet); // 当前用户的权限标记集合
+			return info;
 		}
 
-		// info.setStringPermissions(permsSet);
-		// info SimpleAuthorizationInfo (id=3151)
-		// objectPermissions null
-		// roles null
-		// stringPermissions HashSet<E> (id=3147)
+		Set<String> permsSet = new HashSet<>();
+		permsSet.add("sys:student");
+
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		info.setStringPermissions(permsSet); // 当前用户的权限标记集合
 		return info;

@@ -16,13 +16,10 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 	 * 查询用户的所有权限
 	 * @param userId  用户ID
 	 */
-	List<String> AqueryAllPerms(Long userId);
+	String AqueryAllPerms(Long userId);
 	
 	
-	/**
-	 * 查询超级管理员的所有权限
-	 * @param userId  用户ID
-	 */
+
 	List<String> AqueryAllPermsOfGOD();
 	
 	

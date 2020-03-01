@@ -28,10 +28,10 @@ public class StuScoreServiceImpl extends ServiceImpl<StuScoreDao, StuScore>  {
      */
 	 public PageUtils queryPage(Map<String, Object> params) {
 
-		 String username = (String) params.get("username");
+		 String stuId = (String) params.get("stuId");
 
 		 IPage<StuScore> page = this.page(new Query<StuScore>().getPage(params),
-				 new QueryWrapper<StuScore>().like(StringUtils.isNotBlank(username), "username", username));
+				 new QueryWrapper<StuScore>().eq("s_stuid",stuId));
 
 		 return new PageUtils(page);
 	 }

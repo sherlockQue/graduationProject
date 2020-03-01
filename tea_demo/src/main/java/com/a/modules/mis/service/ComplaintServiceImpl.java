@@ -1,7 +1,8 @@
 package com.a.modules.mis.service;
 
 import com.a.common.core.Query;
-import com.a.modules.mis.entity.Dict;
+import com.a.modules.sys.entity.Dict;
+import com.a.modules.sys.service.DictServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
@@ -37,12 +38,13 @@ public class ComplaintServiceImpl extends ServiceImpl<ComplaintDao, Complaint> {
         Dict dict = dictService.getById(1);
         String StGrade = dict.getGrade();  //今年的素拓
         Integer StTerm = dict.getTerm();  //第一学期
+        String stuId = (String) params.get("stuId");
         IPage<Complaint> page = this.page(
                 new Query<Complaint>().getPage(params),
                 new QueryWrapper<Complaint>()
                         .eq("cp_grade", StGrade)
                         .eq("cp_term", StTerm)
-
+                        .eq("stu_id",stuId)
         );
 
         return new PageUtils(page);
@@ -57,11 +59,13 @@ public class ComplaintServiceImpl extends ServiceImpl<ComplaintDao, Complaint> {
         Dict dict = dictService.getById(1);
         String StGrade = dict.getGrade();  //今年的素拓
         Integer StTerm = dict.getTerm();  //第一学期
+        String stuId = (String) params.get("stuId");
         IPage<Complaint> page = this.page(
                 new Query<Complaint>().getPage(params),
                 new QueryWrapper<Complaint>()
                         .eq("cp_grade", StGrade)
                         .eq("cp_term", StTerm)
+                        .eq("stu_id",stuId)
                         .eq("cp_status", 2)
                         .or()
                         .eq("cp_status", 3)

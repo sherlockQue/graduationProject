@@ -4,18 +4,15 @@ import java.io.*;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 import com.a.common.core.ControllerAide;
-import com.a.modules.mis.entity.Dict;
+import com.a.modules.sys.entity.Dict;
 import com.a.modules.mis.entity.Student;
-import com.a.modules.mis.service.DictServiceImpl;
+import com.a.modules.sys.service.DictServiceImpl;
 import com.a.modules.mis.service.StudentServiceImpl;
-import com.a.modules.sys.entity.SysUser;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,15 +47,14 @@ public class StrelationController {
     private StudentServiceImpl studentService;
 
     /**
-     * 列表
+     * 列表,当前登陆学生的信息
      */
     @PostMapping("/list")
-
+    @RequiresPermissions("sys:student")
     public R list(@RequestParam Map<String, Object> params) {
 
-//        SysUser sysUser = ControllerAide.getUserEntity();
-//        System.out.println("username:" + sysUser.getUsername());
-        // System.out.println("username:"+ControllerAide.getSessionAttribute("username"));
+        Long stuId = ControllerAide.getUserId();
+        params.put("stu_id",stuId+"");
 
         PageUtils page = strelationService.queryPage(params);
         return R.ok().put("page", page);
@@ -69,7 +65,6 @@ public class StrelationController {
      * 信息
      */
     @GetMapping("/info/{stId}")
-    //@RequiresPermissions("mis:strelation:info")
     public R info(@PathVariable("stId") Long stId) {
         Strelation strelation = strelationService.getById(stId);
         return R.ok().put("strelation", strelation);
@@ -79,7 +74,7 @@ public class StrelationController {
      * 保存
      */
     @PostMapping("/save")
-    //@RequiresPermissions("mis:strelation:save")
+    @RequiresPermissions("sys:student")
     public R save(@RequestBody Strelation strelation, HttpServletRequest request) {
 
         Dict dict = dictService.getById(1);
@@ -87,7 +82,7 @@ public class StrelationController {
         String StGrade = dict.getGrade();
         //第一学期
         Integer StTerm = dict.getTerm();
-        String stuId = "2016130217";
+        String stuId = ControllerAide.getUserId()+"";
 
         String pubPath = "F:/uploadImage";     //临时保存路径
         LocalDateTime nowtime = LocalDateTime.now(); //当前时间
@@ -95,27 +90,23 @@ public class StrelationController {
         Student student = studentService.getById(stuId);
 
         //图片转存操作
+        //   ipath = /university/2020/1/计算机学院/16级软工创新班/学号/xxxx.jpg
         String ipath = "/university/" + StGrade +
                 "/" + StTerm +
                 "/" + student.getStuCollege() +
                 "/" + student.getStuId() +
                 "/" + student.getStuClass() + strelation.getStImg();
-        //   ipath = /university/2020/1/计算机学院/16级软工创新班/学号/
+
 
         if (!strelation.getStImg().equals("00")) {
 
             //获得临时图片路径
             String imgpath = pubPath + strelation.getStImg();
-
-            //File file =new File(imgpath);
-
             File source = new File(imgpath);
             File dest = new File(pubPath + ipath);
             if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
-
-
             // copy files using java.nio.FileChannel
             try {
                 copyFileWithFileChannel(source, dest);
@@ -146,8 +137,9 @@ public class StrelationController {
      * 修改
      */
     @PostMapping("/update")
-    //@RequiresPermissions("mis:strelation:update")
+    @RequiresPermissions("sys:student")
     public R update(@RequestBody Strelation strelation) {
+
         strelationService.updateById(strelation);
         return R.ok();
     }
@@ -156,7 +148,7 @@ public class StrelationController {
      * 删除
      */
     @PostMapping("/delete")
-    //@RequiresPermissions("mis:strelation:delete")
+    @RequiresPermissions("sys:student")
     public R delete(@RequestBody Long[] stIds) {
 
         for (Long i : stIds)
@@ -184,14 +176,14 @@ public class StrelationController {
                 //文件暂时存放地址
                 String filepath = "F:/uploadImage/publicImg/";
                 //学号
-                String st_id = "2016130217";
+                int random = (int)(Math.random()*1000)+1000;
                 String TIMESTAMP_FORMAT = "yyyyMMddHHmmss";
                 String nowTime = new SimpleDateFormat(TIMESTAMP_FORMAT).format(new Date());
                 //相对地址
-                String path = "/publicImg/" + nowTime + "." + prefix;
+                String path = "/publicImg/" + nowTime +random+ "." + prefix;
 
 
-                filepath = filepath + nowTime + "." + prefix;  //路径拼接
+                filepath = filepath + nowTime + random+"." + prefix;  //路径拼接
                 // filepath.replace("\\","/");
                 //path.replace("\\", "/");
                 System.out.println("path :" + path);
@@ -239,3 +231,4 @@ public class StrelationController {
     }
 
 }
+

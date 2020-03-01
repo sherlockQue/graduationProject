@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.a.common.core.ControllerAide;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,9 +36,11 @@ public class ComplaintController {
      * 未通过的项目
      */
     @PostMapping("/list")
-    //@RequiresPermissions("mis:complaint:list")
+    @RequiresPermissions("sys:student")
     public R list(@RequestParam Map<String, Object> params) {
 
+        Long stuId = ControllerAide.getUserId();
+        params.put("stuId",stuId+"");
         PageUtils page = complaintService.AqueryPage(params);
         return R.ok().put("page", page);
     }
@@ -47,9 +51,11 @@ public class ComplaintController {
      * @return
      */
     @PostMapping("/list2")
-    //@RequiresPermissions("mis:complaint:list")
+    @RequiresPermissions("sys:student")
     public R list2(@RequestParam Map<String, Object> params) {
 
+        Long stuId = ControllerAide.getUserId();
+        params.put("stuId",stuId+"");
         PageUtils page = complaintService.AqueryPage2(params);
         return R.ok().put("page", page);
     }
@@ -103,6 +109,7 @@ public class ComplaintController {
      */
 
     @GetMapping("/appeal/{id}/{cpReason}")
+    @RequiresPermissions("sys:student")
     public R addAppeal(@PathVariable("id") Long id, @PathVariable("cpReason") String cpReason) {
 
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -122,6 +129,7 @@ public class ComplaintController {
      * @return
      */
     @PostMapping("/showList")
+    @RequiresPermissions("sys:appeal")
     public R showList(@RequestParam Map<String, Object> params) {
         if (params.get("page") != null && params.get("limit") != null) {
 
@@ -136,6 +144,7 @@ public class ComplaintController {
     }
 
     @PostMapping("/passAppeal")
+    @RequiresPermissions("sys:appeal")
     public R passAppeal(@RequestBody Long[] ids, String sign, String cpDealReason) {
 
         //负责人id

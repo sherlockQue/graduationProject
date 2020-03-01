@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
->
+
 <head th:replace="com/header :: common_header(~{::title})">
     <title>用户管理</title> 
   <!--   <link rel="stylesheet" th:href="@{/content/plugins/ueditor/themes/default/css/ueditor.css}"> -->
@@ -116,9 +116,8 @@
 	<!-- 头工具条 -->
 	<script type="text/html" id="toolbarDemo">
 		<div class="layui-btn-container">
- <shiro:hasPermission name="sys:user:save">
+
 			<button class="layui-btn layui-btn-sm layui-icon" lay-event="add">添加</button>
-</shiro:hasPermission>
 			<button class="layui-btn layui-btn-sm layui-icon" lay-event="detail">查看</button>
 			<button class="layui-btn layui-btn-sm layui-icon" lay-event="edit">编辑</button>
 			<button class="layui-btn layui-btn-sm layui-icon" lay-event="batchDel">删除</button>

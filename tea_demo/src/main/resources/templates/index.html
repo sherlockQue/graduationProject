@@ -50,31 +50,39 @@
 <div class="left-nav">
     <div id="side-nav">
         <ul id="nav">
+            <shiro:hasPermission name="sys:system">
+                <li>
+                    <a href="javascript:;">
+                        <i class="iconfont left-nav-li" lay-tips="系统管理">&#xe726;</i>
+                        <cite>系统管理</cite>
+                        <i class="iconfont nav_right">&#xe697;</i></a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a onclick="xadmin.add_tab('权限用户管理','/modules/sys/user')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>权限用户管理</cite></a>
+                        </li>
+                        <li>
+                            <a onclick="xadmin.add_tab('学生用户管理','/modules/mis/student')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>学生用户管理</cite></a>
+                        </li>
+                        <li>
+                            <a onclick="xadmin.add_tab('素拓项管理','/modules/mis/tuoproject')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>素拓项管理</cite></a>
+                        </li>
+                        <li>
+                            <a onclick="xadmin.add_tab('基本信息管理','/modules/sys/dict')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>基本信息管理</cite></a>
+                        </li>
 
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="系统管理">&#xe726;</i>
-                    <cite>系统管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i></a>
-                <ul class="sub-menu">
-                    <li>
-                        <a onclick="xadmin.add_tab('权限用户管理','/modules/sys/user')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限用户管理</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('学生用户管理','/modules/mis/student')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>学生用户管理</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('菜单管理','admin-cate.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>菜单管理</cite></a>
-                    </li>
+                    </ul>
+                </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="sys:student">
 
-                </ul>
-            </li>
             <li>
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="认证管理">&#xe6ce;</i>
@@ -99,7 +107,12 @@
 
 
                 </ul>
+
             </li>
+            </shiro:hasPermission>
+
+
+            <shiro:hasPermission name="sys:student">
             <li>
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="申诉管理">&#xe6ce;</i>
@@ -117,41 +130,46 @@
                             <cite>项目处理结果</cite></a>
                     </li>
 
-                    <li>
-                        <a onclick="xadmin.add_tab('我的素拓分','modules/mis/stuscore')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>我的素拓分</cite></a>
-                    </li>
-
 
                 </ul>
             </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="sys:common">
+
             <li>
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="教师认证管理">&#xe6ce;</i>
                     <cite>教师认证管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
-                    <li>
-                        <a onclick="xadmin.add_tab('一级认证','modules/mis/oneAuthentication')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>一级认证</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('二级认证','modules/mis/twoAuthentication')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>二级认证</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('申诉处理','modules/mis/disposeComplaint')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>申诉处理</cite></a>
-                    </li>
-
+                    <shiro:hasPermission name="sys:passone">
+                        <li>
+                            <a onclick="xadmin.add_tab('一级认证','modules/mis/oneAuthentication')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>一级认证</cite></a>
+                        </li>
+                    </shiro:hasPermission>
+                    <shiro:hasPermission name="sys:passtwo">
+                        <li>
+                            <a onclick="xadmin.add_tab('二级认证','modules/mis/twoAuthentication')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>二级认证</cite></a>
+                        </li>
+                    </shiro:hasPermission>
+                    <shiro:hasPermission name="sys:appeal">
+                            <li>
+                                <a onclick="xadmin.add_tab('申诉处理','modules/mis/disposeComplaint')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>申诉处理</cite></a>
+                            </li>
+                    </shiro:hasPermission>
 
                 </ul>
 
             </li>
+            </shiro:hasPermission>
+
+            <shiro:hasPermission name="sys:common">
             <li>
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="统计">&#xe6ce;</i>
@@ -159,7 +177,7 @@
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('素拓分统计','modules/mis/stuscore')">
+                        <a onclick="xadmin.add_tab('素拓分统计','xx.html')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>素拓分统计</cite></a>
                     </li>
@@ -167,6 +185,7 @@
                 </ul>
 
             </li>
+            </shiro:hasPermission>
 
 
         </ul>

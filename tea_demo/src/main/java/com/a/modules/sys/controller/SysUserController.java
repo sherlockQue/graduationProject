@@ -37,10 +37,10 @@ public class SysUserController  {
  
 	
 	/**
-	 * 所有用户列表
+	 * 所有管理用户列表
 	 */
 	@PostMapping("/list")
-	@RequiresPermissions("sys:user:list")
+	@RequiresPermissions("sys:system")
 	public R list(@RequestParam Map<String, Object> params){
 		PageUtils page = sysUserService.AqueryPage(params);
 		return R.ok().put("page", page);
@@ -72,7 +72,7 @@ public class SysUserController  {
 	 * 用户信息
 	 */
 	@GetMapping("/info/{userId}")
-	@RequiresPermissions("sys:user:info")
+	//@RequiresPermissions("sys:user:info")
 	public R info(@PathVariable("userId") Long userId){
 		SysUser user=sysUserService.Aget(userId);
 		
@@ -83,7 +83,7 @@ public class SysUserController  {
 	 * 保存用户
 	 */
 	@PostMapping("/save")
-	@RequiresPermissions("sys:user:save")
+	//@RequiresPermissions("sys:user:save")
 	public R save(@RequestBody SysUser user){
 
 		user.setCreateTime(LocalDateTime.now());

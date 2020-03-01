@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 
+import com.a.common.core.ControllerAide;
 import com.a.common.utils.EncryptUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,16 +35,25 @@ public class StudentController {
     private StudentServiceImpl studentService;
 
     /**
-     * 列表
+     * 当前所有的学生用户
      */
     @PostMapping("/list")
-    //@RequiresPermissions("mis:student:list")
+    @RequiresPermissions("sys:system")
     public R list(@RequestParam Map<String, Object> params){
+
+
         PageUtils page = studentService.queryPage(params);
         System.out.println("----------------");
         return R.ok().put("page", page);
     }
 
+    /**
+     * 按年级，学院，班级搜索所有的学生，供认证
+     * @param nian
+     * @param xue
+     * @param mc
+     * @return
+     */
     @GetMapping("/showstudent/{nian}/{xue}/{mc}")
     public  R showStudent(@PathVariable("nian")String nian,@PathVariable("xue")String xue,@PathVariable("mc")String mc){
 

@@ -26,8 +26,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> {
-	@Autowired
-	private SysUserRoleServiceImpl sysUserRoleService;
+
 	@Autowired
 	private SysDeptServiceImpl sysDeptService;
 
@@ -69,9 +68,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> {
 		SysDept sysDeptEntity = sysDeptService.getById(user.getDeptId());
 		user.setDeptName(sysDeptEntity.getName());
 
-		// 获取用户所属的角色列表
-		List<Long> roleIdList = sysUserRoleService.AqueryRoleIdList(userId);
-		user.setRoleIdList(roleIdList);
 
 		return user;
 	}
@@ -85,13 +81,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> {
 		SysUser user = this.getOne(new QueryWrapper<SysUser>().eq("username", username));
 
 		// 获取部们名称
-		SysDept sysDeptEntity = sysDeptService.getById(user.getDeptId());
-		user.setDeptName(sysDeptEntity.getName());
-
-		// 获取用户所属的角色列表
-		List<Long> roleIdList = sysUserRoleService.AqueryRoleIdList(user.getUserId());
-		user.setRoleIdList(roleIdList);
-
+		if(user != null && user.getDeptId() != null) {
+			SysDept sysDeptEntity = sysDeptService.getById(user.getDeptId());
+			user.setDeptName(sysDeptEntity.getName());
+		}
 		return user;
 	}
 	
@@ -109,11 +102,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> {
 		String salt = RandomStringUtils.randomAlphanumeric(20); // 随机盐
 		user.setSalt(salt);
 		user.setPassword(EncryptUtils.sha256(user.getPassword(), user.getSalt()));
-
 		this.save(user);
-
-		// 保存用户与角色关系
-		sysUserRoleService.AsaveOrUpdate(user.getUserId(), user.getRoleIdList());
 	}
 
 	/**
@@ -128,9 +117,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> {
 		user.setPassword(EncryptUtils.sha256(user.getPassword(), userEntity.getSalt()));
 
 		this.updateById(user);
-
-		// 保存用户与角色关系
-		sysUserRoleService.AsaveOrUpdate(user.getUserId(), user.getRoleIdList());
 	}
 
 	/**
@@ -141,9 +127,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> {
 	public void Adelete(Long[] userIds) {
 		// 删除用户
 		this.removeByIds(Arrays.asList(userIds));
-
-		// 删除角色用户关联关系
-		sysUserRoleService.AdeleteBatchByUids(userIds);
 
 	}
 
@@ -167,7 +150,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> {
 	 * 查询普通用户的所有权限
 	 * @param userId  用户ID
 	 */
-	public List<String> AqueryAllPerms(Long userId){
+	public String AqueryAllPerms(Long userId){
+
 		return this.baseMapper.AqueryAllPerms(userId);
 	}
 	

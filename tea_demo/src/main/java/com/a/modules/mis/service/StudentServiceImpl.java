@@ -30,10 +30,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentDao, Student>  {
 
    
     public PageUtils queryPage(Map<String, Object> params) {
-        String username = (String) params.get("username");
 
         IPage<Student> page = this.page(new Query<Student>().getPage(params),
-                new QueryWrapper<Student>().like(StringUtils.isNotBlank(username), "username", username));
+                new QueryWrapper<Student>());
 
         return new PageUtils(page);
     }
